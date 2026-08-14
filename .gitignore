@@ -1,0 +1,27 @@
+# Dependencies and frontend build output
+web/node_modules/
+web/dist/
+web/.vercel/
+/.vite/
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+web/.env
+web/.env.*
+!web/.env.example
+
+# Foundry generated output
+contracts/cache/
+contracts/out/
+contracts/broadcast/
+
+# Local OS/editor files
+.DS_Store
+.vscode/
+
+# Personal hackathon notes and recording assets; never publish in the final repo
+/hack/
+/OFFICIAL-HACKATHON-BRIEF.md
+/scripts/package-submission.sh

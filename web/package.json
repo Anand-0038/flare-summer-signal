@@ -1,0 +1,30 @@
+{
+  "name": "flare-summer-signal-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node scripts/run-tests.mjs",
+    "smoke:live": "node scripts/smoke-live.mjs"
+  },
+  "dependencies": {
+    "@noble/hashes": "^2.3.0",
+    "@scure/base": "^2.3.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "viem": "^2.33.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.5",
+    "vite": "^8.2.0"
+  },
+  "overrides": {
+    "nanoid": "3.3.18"
+  }
+}
