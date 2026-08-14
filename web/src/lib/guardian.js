@@ -1,3 +1,5 @@
+import { formatInteger } from './number-format.js'
+
 export const DEFAULT_GUARDIAN_OPERATION = 'redeem_fxrp'
 export const DEFAULT_GUARDIAN_LOTS = '100'
 
@@ -463,8 +465,4 @@ function compareBigInt(left, right) {
   if (leftValue === null) return 1
   if (rightValue === null) return -1
   return leftValue < rightValue ? -1 : leftValue > rightValue ? 1 : 0
-}
-
-function formatInteger(value) {
-  return value.toLocaleString('en-US')
 }

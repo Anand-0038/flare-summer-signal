@@ -1,4 +1,5 @@
 import { evaluateGuardian } from './guardian.js'
+import { formatInteger } from './number-format.js'
 
 export const DEFAULT_THRESHOLDS = Object.freeze({
   oracleWarningAgeSeconds: 120,
@@ -341,8 +342,4 @@ function toBigInt(value) {
   } catch {
     return null
   }
-}
-
-function formatInteger(value) {
-  return value.toLocaleString('en-US')
 }

@@ -122,7 +122,7 @@ The read layer follows Flare's documented integration boundary:
 - The official [redeem-with-tag guide](https://dev.flare.network/fassets/developer-guides/fassets-redeem-with-tag) defines the `minimumRedeemAmountUBA` guard, `simulateContract` boundary, and event-oriented transaction handoff used here. The [Asset Manager reference](https://dev.flare.network/fassets/reference/IAssetManager) defines `redeemAmount` and `redeemWithTag`.
 - The [FTSO off-chain guide](https://dev.flare.network/ftso/guides/read-feeds-offchain) defines the Coston2 FTSOv2 feed read and XRP/USD feed ID.
 
-The app is currently scoped to Coston2. It does not claim Flare mainnet, Songbird, a public deployment, or an owned smart-contract address.
+The app is currently scoped to Coston2. The owner-deployed public demo runs on Render and reads the live Coston2 provider server-side. It does not claim Flare mainnet, Songbird, or an owned smart-contract address.
 
 ## Optional Solidity alert primitive
 
@@ -153,6 +153,12 @@ The repository also includes a Render-compatible Node production server in `web/
 - Health check: `/health`
 
 The production server reuses the same API handlers as the Vercel deployment and serves the Vite build from `web/dist`. It does not substitute fixtures or mock successful chain reads.
+
+Current public demo: <https://fasset-guardian.onrender.com>
+
+- Health: <https://fasset-guardian.onrender.com/health>
+- Live snapshot: <https://fasset-guardian.onrender.com/api/signals.json>
+- Redemption preview: <https://fasset-guardian.onrender.com/api/redemption.json?lots=100>
 
 No API key is required by the default endpoint. A production operator should provide a reliable RPC endpoint through `FLARE_RPC_URL` and monitor 503 responses.
 The reader batches same-cycle JSON-RPC calls and retries transient transport failures with bounded backoff. If the public endpoint still times out, configure a reachable managed Coston2 RPC before starting Vite:

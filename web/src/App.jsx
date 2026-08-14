@@ -8,6 +8,7 @@ import {
   previewRedemption,
 } from './lib/redemption.js'
 import { buildStatusLookupParams } from './lib/status-lookup.js'
+import { formatInteger } from './lib/number-format.js'
 
 const REFRESH_TIMEOUT_MS = 20_000
 const HANDOFF_TIMEOUT_MS = 20_000
@@ -1347,12 +1348,6 @@ function ratioText(value) {
 function ratioBand(value) {
   if (!value?.minimumRatioBIPS || !value?.safetyRatioBIPS) return 'threshold unavailable'
   return `min ${ratioText(value.minimumRatioBIPS)} · safety ${ratioText(value.safetyRatioBIPS)}`
-}
-
-function formatInteger(value) {
-  if (value === null || value === undefined || value === '') return '—'
-  const number = Number(value)
-  return Number.isFinite(number) ? number.toLocaleString('en-US') : '—'
 }
 
 function shortAddress(value) {
