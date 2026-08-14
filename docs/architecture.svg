@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">FAsset Guardian architecture</title>
+  <desc id="desc">A browser or integrator sends an FXRP redemption request to the Render Node service. The service reads live Flare Coston2 data through the Contract Registry, FXRP Asset Manager, FTSO v2, and FAsset token. A deterministic policy produces the dashboard decision, JSON evidence, and unsigned transaction handoff. The user-controlled wallet may perform an optional eth_call simulation, but Guardian never signs or broadcasts.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 z" fill="#f27b63"/>
+    </marker>
+    <marker id="arrowMint" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 z" fill="#b9f4df"/>
+    </marker>
+    <style>
+      .bg { fill: #111315; }
+      .panel { fill: #1b1f23; stroke: #596168; stroke-width: 2; }
+      .flarePanel { fill: #f5e9c9; stroke: #d88a61; stroke-width: 3; }
+      .outputPanel { fill: #20262d; stroke: #b9f4df; stroke-width: 2; }
+      .accentPanel { fill: #f27b63; stroke: #f8b39d; stroke-width: 2; }
+      .title { fill: #fff8e9; font-family: Arial, sans-serif; font-size: 32px; font-weight: 700; letter-spacing: 1px; }
+      .subtitle { fill: #b8c0c5; font-family: Arial, sans-serif; font-size: 17px; font-weight: 400; }
+      .eyebrow { fill: #f27b63; font-family: Arial, sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 2px; }
+      .nodeTitle { fill: #fff8e9; font-family: Arial, sans-serif; font-size: 22px; font-weight: 700; }
+      .nodeText { fill: #cbd1d4; font-family: Arial, sans-serif; font-size: 16px; font-weight: 400; }
+      .darkTitle { fill: #17191c; font-family: Arial, sans-serif; font-size: 21px; font-weight: 700; }
+      .darkText { fill: #33383c; font-family: Arial, sans-serif; font-size: 15px; font-weight: 400; }
+      .small { fill: #aeb8be; font-family: Arial, sans-serif; font-size: 14px; font-weight: 400; }
+      .line { fill: none; stroke: #f27b63; stroke-width: 4; marker-end: url(#arrow); }
+      .mintLine { fill: none; stroke: #b9f4df; stroke-width: 4; marker-end: url(#arrowMint); }
+      .dashed { fill: none; stroke: #b9f4df; stroke-width: 3; stroke-dasharray: 10 8; marker-end: url(#arrowMint); }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1600" height="900" rx="24"/>
+  <text class="eyebrow" x="80" y="72">FLARE SUMMER SIGNAL / BOUNTY 1</text>
+  <text class="title" x="80" y="118">FAsset Guardian architecture</text>
+  <text class="subtitle" x="80" y="151">Live Coston2 reads → deterministic redemption preflight → evidence and unsigned handoff</text>
+
+  <rect class="panel" x="70" y="235" width="260" height="190" rx="16"/>
+  <text class="eyebrow" x="98" y="275">INPUT</text>
+  <text class="nodeTitle" x="98" y="315">Wallet / integrator</text>
+  <text class="nodeText" x="98" y="350">FXRP lots</text>
+  <text class="nodeText" x="98" y="378">Optional Flare account</text>
+  <text class="nodeText" x="98" y="406">XRPL payout address</text>
+
+  <rect class="accentPanel" x="405" y="195" width="315" height="270" rx="16"/>
+  <text class="eyebrow" x="435" y="237" fill="#17191c">PUBLIC SERVICE</text>
+  <text class="darkTitle" x="435" y="279">Render Node server</text>
+  <text class="darkText" x="435" y="315">Vite dashboard + API handlers</text>
+  <text class="darkText" x="435" y="345">Same live read layer as Vercel</text>
+  <text class="darkText" x="435" y="375">No RPC URL disclosure</text>
+  <text class="darkText" x="435" y="405">503 when provider evidence fails</text>
+  <text class="darkText" x="435" y="435">No mock fallback</text>
+
+  <rect class="flarePanel" x="800" y="190" width="700" height="300" rx="18"/>
+  <text class="eyebrow" x="835" y="233" fill="#9f4a3c">LIVE FLARE COSTON2 / CHAIN 114</text>
+  <text class="darkTitle" x="835" y="274">Registry-resolved protocol reads</text>
+
+  <rect x="835" y="315" width="185" height="125" rx="12" fill="#fff8e9" stroke="#c8b98f" stroke-width="2"/>
+  <text class="darkTitle" x="860" y="353" font-size="17">Contract Registry</text>
+  <text class="darkText" x="860" y="383">Resolves protocol</text>
+  <text class="darkText" x="860" y="407">addresses at runtime</text>
+
+  <rect x="1050" y="315" width="185" height="125" rx="12" fill="#fff8e9" stroke="#c8b98f" stroke-width="2"/>
+  <text class="darkTitle" x="1075" y="353" font-size="17">FXRP Asset Manager</text>
+  <text class="darkText" x="1075" y="383">FIFO queue, agents,</text>
+  <text class="darkText" x="1075" y="407">settings, balances</text>
+
+  <rect x="1265" y="315" width="200" height="125" rx="12" fill="#fff8e9" stroke="#c8b98f" stroke-width="2"/>
+  <text class="darkTitle" x="1290" y="353" font-size="17">FTSO v2 + FAsset</text>
+  <text class="darkText" x="1290" y="383">XRP/USD freshness</text>
+  <text class="darkText" x="1290" y="407">and token metadata</text>
+
+  <path class="line" d="M330 330 H405"/>
+  <path class="line" d="M720 330 H800"/>
+  <path class="mintLine" d="M1020 378 H1050"/>
+  <path class="mintLine" d="M1235 378 H1265"/>
+
+  <rect class="panel" x="410" y="580" width="335" height="190" rx="16"/>
+  <text class="eyebrow" x="440" y="620">POLICY</text>
+  <text class="nodeTitle" x="440" y="661">Deterministic Guardian</text>
+  <text class="nodeText" x="440" y="697">Block-pinned evidence</text>
+  <text class="nodeText" x="440" y="725">FIFO replay + agent obligations</text>
+  <text class="nodeText" x="440" y="753">ALLOW / WATCH / BLOCK</text>
+
+  <rect class="outputPanel" x="835" y="555" width="215" height="160" rx="16"/>
+  <text class="eyebrow" x="865" y="595">OUTPUT 01</text>
+  <text class="nodeTitle" x="865" y="635">Dashboard</text>
+  <text class="nodeText" x="865" y="670">Human-readable</text>
+  <text class="nodeText" x="865" y="696">evidence and reasons</text>
+
+  <rect class="outputPanel" x="1090" y="555" width="215" height="160" rx="16"/>
+  <text class="eyebrow" x="1120" y="595">OUTPUT 02</text>
+  <text class="nodeTitle" x="1120" y="635">JSON API</text>
+  <text class="nodeText" x="1120" y="670">Signals, redemption</text>
+  <text class="nodeText" x="1120" y="696">and status endpoints</text>
+
+  <rect class="outputPanel" x="1345" y="555" width="215" height="160" rx="16"/>
+  <text class="eyebrow" x="1375" y="595">OUTPUT 03</text>
+  <text class="nodeTitle" x="1375" y="635">Unsigned plan</text>
+  <text class="nodeText" x="1375" y="670">redeemAmount /</text>
+  <text class="nodeText" x="1375" y="696">redeemWithTag</text>
+
+  <path class="line" d="M1150 490 V535 H575 V580"/>
+  <path class="line" d="M575 770 V805 H942 V715"/>
+  <path class="line" d="M745 675 H835"/>
+  <path class="line" d="M745 675 H1090"/>
+  <path class="line" d="M745 675 H1345"/>
+
+  <rect x="1100" y="760" width="410" height="80" rx="14" fill="#153b35" stroke="#b9f4df" stroke-width="2"/>
+  <text class="nodeTitle" x="1130" y="794" font-size="18">Optional eth_call simulation</text>
+  <text class="nodeText" x="1130" y="821">User wallet → Coston2 only; no signing or broadcast</text>
+  <path class="dashed" d="M1450 715 V760"/>
+</svg>
