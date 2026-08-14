@@ -103,6 +103,7 @@ corepack pnpm run smoke:live
 | `web/api/redemption.js` | Vercel/serverless FIFO redemption-preflight endpoint |
 | `web/api/redemption-plan.js` | Vercel/serverless unsigned transaction-plan and simulation endpoint |
 | `web/api/redemption-status.js` | Vercel/serverless redemption request status endpoint |
+| `web/server.mjs` | Render-compatible production server for the built UI and live API handlers |
 | `web/vite.config.js` | Local/preview API middleware for the same live path |
 | `scripts/verify-browser.sh` | Headless browser and live API smoke gate |
 | `scripts/verify-interactions.mjs` | CDP interaction checks for handoff, invalidation, checksum rejection, and recovery |
@@ -143,6 +144,15 @@ If a local mock deployment is genuinely needed, opt into it explicitly with `DEP
 ## Deployment
 
 The frontend is compatible with a Vercel project whose **Root Directory is `web`**. The serverless `/api/signals.json`, `/api/decision.json`, and `/api/redemption.json` functions use the same `src/lib/fassets.js` read layer. `FLARE_RPC_URL` is optional; when unset, the documented public Coston2 endpoint is used.
+
+The repository also includes a Render-compatible Node production server in `web/server.mjs`. For a Render **Web Service** using the repository root, use:
+
+- Build command: `corepack pnpm --dir web install --frozen-lockfile && corepack pnpm --dir web run build`
+- Start command: `corepack pnpm --dir web start`
+- Environment: `FLARE_RPC_URL=https://coston2-api.flare.network/ext/C/rpc` (optional; `COSTON2_RPC_URL` is the legacy alias)
+- Health check: `/health`
+
+The production server reuses the same API handlers as the Vercel deployment and serves the Vite build from `web/dist`. It does not substitute fixtures or mock successful chain reads.
 
 No API key is required by the default endpoint. A production operator should provide a reliable RPC endpoint through `FLARE_RPC_URL` and monitor 503 responses.
 The reader batches same-cycle JSON-RPC calls and retries transient transport failures with bounded backoff. If the public endpoint still times out, configure a reachable managed Coston2 RPC before starting Vite:

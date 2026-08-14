@@ -11,6 +11,7 @@ const REGISTRY_ABI = parseAbi([
   'function getContractAddressByName(string _name) view returns (address)',
 ])
 const MAX_LOOKBACK_BLOCKS = 1_000_000n
+const MAX_SAFE_SECONDS = BigInt(Number.MAX_SAFE_INTEGER)
 
 export function parseRedemptionStatusParams(searchParams) {
   const fromBlockText = String(searchParams.get('fromBlock') || '').trim()
@@ -551,12 +552,25 @@ function toBigInt(value) {
 
 function summarizeDeadline(lastUnderlyingTimestamp, nowUnixSeconds) {
   const deadline = toBigInt(lastUnderlyingTimestamp)
-  const safeNow = Math.floor(nowUnixSeconds)
-  const now = Number.isFinite(safeNow) ? BigInt(safeNow) : null
-  if (deadline === null || now === null || deadline <= 0n) {
+  if (
+    deadline === null
+    || !Number.isFinite(nowUnixSeconds)
+    || nowUnixSeconds < 0
+  ) {
     return {
-      valid: deadline !== null && now !== null && deadline > 0n,
-      passed: deadline !== null && now !== null && deadline <= now,
+      valid: false,
+      passed: false,
+      remainingSeconds: 0,
+    }
+  }
+
+  const now = nowUnixSeconds <= Number.MAX_SAFE_INTEGER
+    ? BigInt(Math.floor(nowUnixSeconds))
+    : null
+  if (now === null || now < 0n) {
+    return {
+      valid: false,
+      passed: false,
       remainingSeconds: 0,
     }
   }
@@ -570,7 +584,7 @@ function summarizeDeadline(lastUnderlyingTimestamp, nowUnixSeconds) {
   }
 
   const remaining = deadline - now
-  if (!Number.isSafeInteger(Number(remaining))) {
+  if (remaining > MAX_SAFE_SECONDS) {
     return {
       valid: false,
       passed: false,

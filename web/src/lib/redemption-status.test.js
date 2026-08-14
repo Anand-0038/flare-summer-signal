@@ -226,6 +226,23 @@ test('status evaluation invalidates non-safe deadline durations', () => {
   assert.equal(status.reasonCodes.includes('PAYMENT_DEADLINE_INVALID'), true)
 })
 
+test('status evaluation handles very large deadline windows deterministically', () => {
+  const veryLargeDeadline = (BigInt(Number.MAX_SAFE_INTEGER) + 1n).toString()
+  const status = summarizeRequestStatus(
+    {
+      lastUnderlyingTimestamp: veryLargeDeadline,
+    },
+    {
+      performed: false,
+      defaulted: false,
+    },
+    0,
+  )
+
+  assert.equal(status.code, 'UNKNOWN')
+  assert.equal(status.reasonCodes.includes('PAYMENT_DEADLINE_INVALID'), true)
+})
+
 test('status lookup rejects requestId ranges that start after latest chain block', async () => {
   const result = await findRedemptionRequestById(
     {
