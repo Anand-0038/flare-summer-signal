@@ -5,8 +5,6 @@ web/.vercel/
 /.vite/
 
 # Local environment and secrets
-.env
-.env.*
 !.env.example
 web/.env
 web/.env.*
@@ -19,9 +17,13 @@ contracts/broadcast/
 
 # Local OS/editor files
 .DS_Store
-.vscode/
 
 # Personal hackathon notes and recording assets; never publish in the final repo
 /hack/
 /OFFICIAL-HACKATHON-BRIEF.md
 /scripts/package-submission.sh
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
+config.bat
+node_modules

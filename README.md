@@ -6,6 +6,16 @@ The project is prepared for **Bounty 1 — Interoperable Asset Products** in the
 
 ## The judge-verifiable flow
 
+![FAsset Guardian live Coston2 dashboard](docs/images/fasset-guardian-dashboard.jpg)
+
+_Captured from the public Render deployment. The `WATCH` state and protocol values are live provider-backed data and can change between visits._
+
+### Architecture
+
+![FAsset Guardian architecture: live Flare reads, deterministic policy, and unsigned handoff](docs/architecture.svg)
+
+The public service and local Vercel-compatible handlers share the same read and policy modules. Guardian reads the live Coston2 state, fails closed on missing evidence, and stops at an unsigned transaction plan; signing and broadcasting remain with the user's wallet.
+
 ```text
 redemption request: lots
         ↓
